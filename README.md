@@ -85,13 +85,13 @@ If a clean (freshly downloaded) VHD contains a configuration file, and the game 
 
 When `SAVIOR.EXE` saves a backup, it also stores the CRC-32 hash of the original file (i.e., its hash from the manifest). That way, it can tell whether your backed-up copy is a customized version of the *same* file, which would **not** be a conflict, or a customized version of a *different* file, which would be a conflict.
 
-If you choose to restore your config file, the backed-up CRC-32 hash (i.e., the one that was copied from the first VHD's manifest) and the filename are saved to `INJECTED.VIO`. Entries in this file act like entries in `MANIFEST.VIO` but supersede them. This means subsequent backups of the file will retain the original CRC-32 hash from the first VHD's manifest, so you will be prompted to upgrade again if your replace the VHD again (even if the file in the third VHD is the same as the file in the second VHD).
+If you choose to restore your config file, the backed-up CRC-32 hash (i.e., the one that was copied from the first VHD's manifest) and the filename are saved to `INJECTED.VIO`. Entries in this file act like entries in `MANIFEST.VIO` but supersede them. This means subsequent backups of the file will retain the original CRC-32 hash from the first VHD's manifest, so you will be prompted to upgrade again if you replace the VHD again (even if the file in the third VHD is the same as the file in the second VHD).
 
 ### Injecting Files
 
 If you want to force `SAVIOR.EXE` to restore a file, you can inject it into the VHD by placing it in a special MiSTerFS directory (e.g. `S:\SAVIOR\MYGAME\INJECT`). The file will be moved into place in the VHD next time it's booted. Its hash (computed upon injection) and name will be stored in `INJECTED.VIO`.
 
-One interesting way this could be used is to inject alternate config files, such as for MT-32 support. Instead of distributing two whole copies of a game with different sound settings, a VHD author could package one with Sound Blaster support enabled, and another that contains only an MT-32 version of the config file that unzips to `games/AO486/shared/SAVIOR/MYGAME/INJECT/SOUND.CFG`.
+One interesting way this could be used is to inject alternate config files, such as for MT-32 support. Instead of distributing two whole copies of a game with different sound settings, a VHD author could create one package containing a VHD with Sound Blaster support enabled, and another package containing only an MT-32 version of the config file that unzips to `games/AO486/shared/SAVIOR/MYGAME/INJECT/SOUND.CFG`.
 
 MT-32 users would just have to download and unzip both files. `SAVIOR.EXE` would move the MT-32 config file into place the first time it ran.
 
@@ -99,13 +99,13 @@ MT-32 users would just have to download and unzip both files. `SAVIOR.EXE` would
 
 VHD authors *may* include a manifest in their VHD images. You can force `SAVIOR.EXE` to generate a manifest (and do nothing else) by running it without a destination path.
 
-Manifests can contain extra information about each file, such as a flag that means "this is known to be a static file, not a save or config file that we might want to back up, so don't bother computing its hash." Using this flag will make `SAVIOR.EXE` run more quickly. But this is just an optimization step and isn't mandatory.
+Manifests can contain extra information about each file, such as a flag that means "this is known to be a static file, not a save or config file that we might want to back up, so don't bother computing its hash." Using this flag will make `SAVIOR.EXE` run more quickly. But this is just an optimization step and isn't mandatory. To use this flag, replace a file's CRC-32 hash with `____SKIP` in the manifest.
 
-Comments are also allowed in the manifest file. VHD authors can use comments to explain what various files are for. (Example: if the VHD contains a trainer, that file can be labeled as a custom addition to the VHD.) Any part of a line that follows a semicolon is considered a comment.
+Comments are also allowed in the manifest file. VHD authors can use comments to explain what various files are for. (Example: if the VHD contains a trainer, that file can be labeled as a custom addition to the VHD.) Any part of a line that follows a semicolon (`;`) is considered a comment.
 
 ### Shared Directory Layout
 
-The MiSTerFS shared directory for a particular game is specified as the second path passed to `SAVIOR.EXE` (e.g. `S:\SAVIOR\KEEN1`). Within that directory, you'll find these subdirectories:
+The MiSTerFS shared directory for a particular game is specified as the second path passed to `SAVIOR.EXE` (e.g. `S:\SAVIOR\MYGAME`). Within that directory, you'll find these subdirectories:
 
 - `BACKUP` (used for storing the config and save files themselves)
 - `CRC` (used for storing the CRC-32 hashes copied from the manifest)
