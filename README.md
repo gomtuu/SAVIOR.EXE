@@ -30,13 +30,13 @@ MISTER\MISTERFS.EXE /u /q
 
 Or in `RUNGAME.BAT`:
 ```
-MISTER\MISTERFS.EXE S /q
-SAVIOR.EXE \ S:\SAVIOR\KEEN1 /a
-MISTER\MISTERFS.EXE /u /q
+\MISTER\MISTERFS.EXE S /q
+\SAVIOR.EXE \ S:\SAVIOR\KEEN1 /a
+\MISTER\MISTERFS.EXE /u /q
 KEEN1.EXE
-MISTER\MISTERFS.EXE S /q
-SAVIOR.EXE \ S:\SAVIOR\KEEN1 /a
-MISTER\MISTERFS.EXE /u /q
+\MISTER\MISTERFS.EXE S /q
+\SAVIOR.EXE \ S:\SAVIOR\KEEN1 /a
+\MISTER\MISTERFS.EXE /u /q
 ```
 
 This will cause `SAVIOR.EXE` to scan the VHD's root directory `\` and create `MANIFEST.VIO` in the same directory, or load `MANIFEST.VIO` if it already exists. It will save backups to (and potentially restore them from) `S:\SAVIOR\KEEN1`.
